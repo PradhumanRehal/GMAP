@@ -7,9 +7,12 @@ var ViewModal = function(){
 	var lngVal;
 	var preferredLocation;
 	var request;
+	var names = [];
 
 	self.neighborhood = ko.observable(defaultNeighborhood);
 	self.places = ko.observableArray();
+	self.infowindow;
+	self.markers = ko.observableArray();
 
 	initMap = function(){
 			map = new google.maps.Map(document.getElementById("map"),{
@@ -17,6 +20,8 @@ var ViewModal = function(){
 			//disableDefaultUI: true,
 			//center: {lat: 37.3860517,lng: -122.0838511}
 		});
+		self.infowindow = new google.maps.InfoWindow();
+
 	};
 
 	initRequest = function(){
@@ -43,39 +48,61 @@ var ViewModal = function(){
 
 	     	initMap();	 			     		
 		}
+
 	};
 
 	initPlacesRequest = function(pLocation){
-			request = {
-				location: pLocation,
-				radius: '1000',
-				types: ['history']
-			};
+		request = {
+			location: pLocation,
+			radius: '1000',
+			types: ['history']
+		};
 
-			var place;
+		var place;
 
-			var service = new google.maps.places.PlacesService(map);	
-			service.nearbySearch(request, function(results, status) {
-			    if (status == google.maps.places.PlacesServiceStatus.OK) {
-			      for (var i = 0; i < results.length; i++) {
-			      	//console.log(self.places);
-			      	//console.log(results[i]);
-			        place = results[i];
-			        self.places.push(place.name);
-			        // If the request succeeds, draw the place location on
-			        // the map as a marker, and register an event to handle a
-			        // click on the marker.
-			        marker = new google.maps.Marker({
-			          map: map,
-			          position: place.geometry.location
-			        });
-						console.log(place);	        
-			      }
-		     	console.log(self.places);
-			    }
-		  	});
+		var service = new google.maps.places.PlacesService(map);	
+		service.nearbySearch(request, function(results, status) {
+		    if (status == google.maps.places.PlacesServiceStatus.OK) {
+		      for (var i = 0; i < results.length; i++) {
 
+		        place = results[i];
+		        self.places.push(place.name);
+		        names.push(place.name);
+		        console.log(names[i]);
+		        // If the request succeeds, draw the place location on
+		        // the map as a marker, and register an event to handle a
+		        // click on the marker.
+		        self.markers.push(new self.createMarker(place.geometry.location,names[i]));
+		      }
+		    }
+	  	});
+	};
+
+	self.createMarker = function(pLoc,pName){
+		marker = new google.maps.Marker({
+          	map: map,
+          	position: pLoc
+        });
+        self.clickListener(marker,pName);
+	};
+
+	self.clickListener = function(marker,pName){
+		console.log(names);	
+		marker.addListener('click',function(){
+			self.createInfowindow(marker,pName);
+			self.infowindow.open(map,marker);
+			//marker.setAnimation(google.maps.Animation.BOUNCE);
+		});
 	}
+
+	self.createInfowindow = function(marker,content){
+		console.log(content);
+		self.infowindow.setContent(content);
+		self.infowindow.addListener('closeclick',function(){
+			self.infowindow.marker = null;
+			//marker.setAnimation(false);
+		});
+	};
 
 }
 
