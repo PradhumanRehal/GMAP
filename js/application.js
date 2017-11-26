@@ -115,6 +115,8 @@ var ViewModal = function(){
 	};
 
 	self.displayList = ko.computed(function(){
+		if(names!= self.places()){
+		}
 		console.log(names);
 		return names;
 	},this);
