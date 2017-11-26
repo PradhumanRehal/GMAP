@@ -8,3 +8,22 @@ html{
   width: 100%;
   margin: 0;
   padding: 0;
+}
+#list-div{
+	z-index: 1;
+	flex-wrap: wrap;
+}
+#list-element{
+	border: 2px solid black; 
+}
+#list {
+	padding: 0;
+	position: absolute;
+	z-index: 1;
+	list-style: none;
+	overflow-y: scroll;
+	max-width: 200px;
+	max-height: 400px;
+	right : 10px;
+	background-color : white;
+}

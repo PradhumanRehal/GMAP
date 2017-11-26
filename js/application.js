@@ -7,10 +7,11 @@ var ViewModal = function(){
 	var lngVal;
 	var preferredLocation;
 	var request;
-	var names = [];
+	var names;
 
 	self.neighborhood = ko.observable(defaultNeighborhood);
 	self.places = ko.observableArray();
+	self.name = ko.observable();
 	self.infowindow;
 	self.markers = ko.observableArray();
 
@@ -52,6 +53,8 @@ var ViewModal = function(){
 	};
 
 	initPlacesRequest = function(pLocation){
+		names = 0;
+
 		request = {
 			location: pLocation,
 			radius: '1000',
@@ -59,21 +62,26 @@ var ViewModal = function(){
 		};
 
 		var place;
+		names = [];
 
 		var service = new google.maps.places.PlacesService(map);	
 		service.nearbySearch(request, function(results, status) {
 		    if (status == google.maps.places.PlacesServiceStatus.OK) {
+
 		      for (var i = 0; i < results.length; i++) {
 
 		        place = results[i];
-		        self.places.push(place.name);
+
 		        names.push(place.name);
 		        console.log(names[i]);
 		        // If the request succeeds, draw the place location on
 		        // the map as a marker, and register an event to handle a
 		        // click on the marker.
 		        self.markers.push(new self.createMarker(place.geometry.location,names[i]));
-		      }
+
+		       		self.places.push(names[i]);
+
+		  	  }
 		    }
 	  	});
 	};
@@ -84,25 +92,32 @@ var ViewModal = function(){
           	position: pLoc
         });
         self.clickListener(marker,pName);
+        return pName;
+        //self.places.push(pName);
 	};
 
 	self.clickListener = function(marker,pName){
-		console.log(names);	
 		marker.addListener('click',function(){
 			self.createInfowindow(marker,pName);
 			self.infowindow.open(map,marker);
-			//marker.setAnimation(google.maps.Animation.BOUNCE);
 		});
 	}
 
 	self.createInfowindow = function(marker,content){
+		//marker.setAnimation(google.maps.Animation.BOUNCE);
 		console.log(content);
 		self.infowindow.setContent(content);
 		self.infowindow.addListener('closeclick',function(){
 			self.infowindow.marker = null;
 			//marker.setAnimation(false);
 		});
+		//self.places = ko.observableArray();
 	};
+
+	self.displayList = ko.computed(function(){
+		console.log(names);
+		return names;
+	},this);
 
 }
 

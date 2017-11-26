@@ -15,8 +15,8 @@
 			<h4> Neighborhood </h4>
 			<input id = "input" type="text" name="search" data-bind="value: neighborhood">
 			<button id = "search" data-bind="click: initRequest">search</button>
-			<div><ul data-bind="foreach: places">
-					<li data-bind="text: $data"></li>
+			<div id = list-div><ul id = list data-bind="foreach: displayList">
+					<li id=list-element data-bind="text: $data"></li>
 				</ul>
 			</div>
 		</div>
