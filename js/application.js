@@ -3,6 +3,7 @@ var ViewModal = function(){
 	var map;
 	var self = this;
 	var defaultNeighborhood = 'Mountain View';
+	var defaultType = 'history';
 	var latVal;
 	var lngVal;
 	var preferredLocation;
@@ -10,6 +11,7 @@ var ViewModal = function(){
 	var names;
 
 	self.neighborhood = ko.observable(defaultNeighborhood);
+	self.neighborhoodType = ko.observable(defaultType);
 	self.places = ko.observableArray();
 	self.name = ko.observable();
 	self.infowindow;
@@ -58,7 +60,7 @@ var ViewModal = function(){
 		request = {
 			location: pLocation,
 			radius: '1000',
-			types: ['history']
+			types: [self.neighborhoodType()]
 		};
 
 		var place;
@@ -94,24 +96,25 @@ var ViewModal = function(){
         self.clickListener(marker,pName);
         return pName;
         //self.places.push(pName);
+
 	};
 
 	self.clickListener = function(marker,pName){
 		marker.addListener('click',function(){
 			self.createInfowindow(marker,pName);
 			self.infowindow.open(map,marker);
+			//marker.setAnimation(google.maps.Animation.BOUNCE);
 		});
 	}
 
 	self.createInfowindow = function(marker,content){
-		//marker.setAnimation(google.maps.Animation.BOUNCE);
+		
 		console.log(content);
 		self.infowindow.setContent(content);
 		self.infowindow.addListener('closeclick',function(){
 			self.infowindow.marker = null;
 			//marker.setAnimation(false);
 		});
-		//self.places = ko.observableArray();
 	};
 
 	self.displayList = ko.computed(function(){

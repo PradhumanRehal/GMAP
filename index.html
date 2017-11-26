@@ -10,11 +10,14 @@
 	<title>PlaceHolder</title>
 </head>
 <body>
-	<div class="container">
+	<div >
 		<div>
-			<h4> Neighborhood </h4>
-			<input id = "input" type="text" name="search" data-bind="value: neighborhood">
-			<button id = "search" data-bind="click: initRequest">search</button>
+			<div id="search-area">
+				<h4> Neighborhood </h4>
+				<input id = "input" type="text" name="search" data-bind="value: neighborhood">
+				<input id = "input-type" type="text" name="searchtype" data-bind="value: neighborhoodType">				
+				<button id = "search" data-bind="click: initRequest">search</button>
+			</div>
 			<div id = list-div><ul id = list data-bind="foreach: displayList">
 					<li id=list-element data-bind="text: $data"></li>
 				</ul>
