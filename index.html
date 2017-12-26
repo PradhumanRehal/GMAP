@@ -10,19 +10,20 @@
 	<title>PlaceHolder</title>
 </head>
 <body>
-	<div >
+	<div class="conatiner">
 		<div>
-			<div id="search-area">
-				<h4> Neighborhood </h4>
-				<input id = "input" type="text" name="search" data-bind="value: neighborhood">
-				<input id = "input-type" type="text" name="searchtype" data-bind="value: neighborhoodType">				
-				<button id = "search" data-bind="click: initRequest">search</button>
+			<div id="search-area" class="col-md-8">
+				<h4 id="header-text" class="col-md-6"> Neighborhood </h4>
+				<input id = "input" class="col-md-6" type="text" name="search" data-bind="value: neighborhood">
+				<input id = "input-type" class="col-md-6" type="text" name="searchtype" data-bind="value: neighborhoodType">				
+				<button id = "search" class="col-md-6" data-bind="click: initRequest">search</button>
 			</div>
-			<div id = list-div><ul id = list data-bind="foreach: displayList">
-					<li id=list-element data-bind="text: $data"></li>
+			<div id = list-div><ul id = list data-bind="foreach: listFunction">
+					<li id=list-element data-bind="text: $data.name,click: $parent.resetMarker"></li>
 				</ul>
 			</div>
 		</div>
+		<div id="signature"></div>
 	</div>
 	<div id = "map"></div>
 	<script type="text/javascript" src="js/jquery.js"></script>

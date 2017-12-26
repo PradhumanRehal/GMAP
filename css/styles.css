@@ -2,26 +2,35 @@ body,
 html{
   width: 100%;
   height: 100%;
+
+}
+
+
+#header-text{
+  margin:0;
+  display: none;
 }
 #search-area{
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  margin : 0;
+/*  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+*/  margin : 0;
   z-index : 1;
   top : 80px;
   position : absolute;
-  display:flex;
   left: 20px;
-	max-width: 50%;
-	
-	
-
+  color: #373737;
+  flex-direction: column;
 }
 #input: {
   margin : 0;
   z-index : 1;
   /*position : fixed;*/
-  max-width:300px;
+ }
+
+#input-type: {
+  margin: 0;
+  display: none;
 }
+
 #search {
   margin : 0;
   z-index : 1;
@@ -31,6 +40,7 @@ html{
   border:none;
   cursor: pointer;
   outline: 0;
+  width: 100%;
 }
 #map {
   top : 0;
@@ -50,30 +60,54 @@ html{
 }
 #list {
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  top : 80px;
+  top : 120px;
 	padding: 0;
 	position: absolute;
 	z-index: 1;
 	list-style: none;
 	overflow-y: scroll;
-	max-width: 200px;
-	max-height: 400px;
+	max-width: 30%;
+	max-height: 70%;
 	right : 10px;
-	background-color : white;
+	background-color : white; 
 }
-@media only screen and (max-width: 500px) {
-    #input{
-	   width:100px;
-	    }
-	#input-type{
-	   width:100px;}
-		
-	  #list{
-	   width:125px;
-	}h4{display:none;}
-		
-	
-	
-	
+
+@media screen 
+  and (max-width: 360px) 
+  {
+  #header-text{
+    display: none;
+  }
+  #search-area{
+  max-width:360px;
+  padding :none;
+  left: 0;
+  top: 0;
+
+  }
+  #input: {
+    padding : none;
+    width:30%;
+
+  }
+
+  #input-type: {
+    width:30%;
+
+  }
+}
+
+@media screen 
+  and (max-width: 768px) 
+  {
+
+  #search-area{
+  padding :none;
+  left: 0;
+  top: 0;
+  }
+  #list{
+  border: 2px solid orange;
+  }
 
 }
