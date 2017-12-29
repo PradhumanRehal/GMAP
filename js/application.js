@@ -215,10 +215,12 @@ var ViewModal = function(){
 			map = new google.maps.Map(document.getElementById("map"),{
 			styles:styles,
 			zoom: 14
-			//disableDefaultUI: true,
+			/*disableDefaultUI: true*/
 		});
 
-		self.infowindow = new google.maps.InfoWindow();
+		self.infowindow = new google.maps.InfoWindow({
+			maxWidth: 200
+		});
 	};
 
 	//Geocoding request for obtaining the latitudes and longitudes of the entered neighborhood location
@@ -265,13 +267,16 @@ var ViewModal = function(){
 
 	      for (var i = 0; i < results.length; i++) {
 
+
 	        place = results[i];
 
 	        self.places.push(results[i]);
-	        console.log(place.photos);
 
 	       self.markers.push(new self.createMarker(place));
 	  	  }
+	    }
+	    else{
+	    	alert("Something got wrong " + status);
 	    }
   	});  	
 	};
@@ -295,9 +300,9 @@ var ViewModal = function(){
     		marker.rating = "N/A";
     	}
 
-        self.clickListener(marker);
+    	self.clickListener(marker);
 
-        return marker;
+    	return marker;
 	};
 
 	// Function for listening clicks on the markers
@@ -314,6 +319,7 @@ var ViewModal = function(){
 		if(activeMarker){
 			activeMarker.setAnimation(false);
 			activeMarker.setIcon('https://mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-poi.png');	
+			self.infowindow.marker = null;
 		}
 
 		//if activeMarker == marker set animation and icon
